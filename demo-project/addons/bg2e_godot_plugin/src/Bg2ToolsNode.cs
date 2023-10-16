@@ -71,8 +71,8 @@ public partial class Bg2ToolsNode : Node3D {
             var scene = _AddOwnerNode;
             var rootNode = _AddParentNode;
             if (scene != null && rootNode != null) {
-                // TODO: Load bg2 model into a MeshInstance3D
-                var newNode = new Node3D();
+                var newNode = new Bg2Mesh();
+                newNode.LoadMeshFromFile(path);
                 newNode.Name = GetNodeNameFromPath(path);
                 rootNode.Position = new Vector3(0.0f, 0.0f, 0.0f);
                 rootNode.AddChild(newNode);
