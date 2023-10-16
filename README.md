@@ -22,3 +22,11 @@ Pou can use this plugin with Godot 4.1 .NET, as the code is developed in C#. How
 In the `demo-project` example you have a Godot Engine project with the plugin add-on. To use the plugin in your project, copy the `addons/bg2e_godot_plugin` folder to the `addons` folder in your project. If your project is not C#, you may have to create the solution manually via the menu `Project` > `Tools` > `C#` > `Create C# Solution`.
 
 
+## Debug
+
+The recomendation is to use Visual Studio Code as text editor and IDE. You need to install the extension C# Dev Kit from Microsoft. Optionally, you can install the extension godot-tools to debug GDScript in Visual Studio Code. You also need to configure the external editor path in Godot Engine Editor Settings (Text Editor > External).
+
+To launch Godot from VS Code debuger, you need to set up the GODOT4 environment variable, pointing to the Godot 4 executable (in macOS, the executable is the file `Godot.app/Content/MacOS/Godot`. Do not set the application package).
+
+Now, you can set break points in the code an debug the source code with the Visual Studio Code debugger. Visual Studio Code will launch Godot in game mode when you start debugging. Note that there is no way to debug editor plugins. To do it, the easiest way is to include the code you want to debug using nodes in a game, and then use that nodes to create the editor plugins.
+
