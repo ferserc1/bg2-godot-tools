@@ -5,8 +5,9 @@ using System.Collections.Generic;
 using System.Linq;
 
 [Tool]
-public partial class Bg2Mesh : MeshInstance3D
+public partial class Bg2Mesh : Node3D
 {
+    // Important: call this function AFTER the node has been added to the scene
     public void LoadMeshFromFile(string path)
     {
         try {
@@ -42,9 +43,10 @@ public partial class Bg2Mesh : MeshInstance3D
         return result.ToArray();
     }
 
+    // Important: call this function AFTER the node has been added to the scene
     public void LoadMesh(Bg2File bg2File)
     {
-        var arrayMesh = new ArrayMesh();
+        var scene = GetTree().EditedSceneRoot;
         GD.Print("Loading bg2 model version: ", bg2File.GetVersion());
         foreach (var plist in bg2File.polyLists) {
             var surfaceArray = new Godot.Collections.Array();
@@ -64,9 +66,15 @@ public partial class Bg2Mesh : MeshInstance3D
                 index.Add(plist.index[i]);
             }
             surfaceArray[(int)Mesh.ArrayType.Index] = index.ToArray();
-            arrayMesh.AddSurfaceFromArrays(Mesh.PrimitiveType.Triangles, surfaceArray);
-        }
 
-        Mesh = arrayMesh;
+            var arrayMesh = new ArrayMesh();
+            arrayMesh.AddSurfaceFromArrays(Mesh.PrimitiveType.Triangles, surfaceArray);
+
+            var polyList = new Bg2PolyList();
+            AddChild(polyList);
+            polyList.Name = plist.name;
+            polyList.Owner = scene;
+            polyList.Mesh = arrayMesh;
+        }
     }
 }

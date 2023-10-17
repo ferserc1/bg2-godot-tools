@@ -5,9 +5,6 @@
 [node name="Main" type="Node3D"]
 script = ExtResource("1_wh3rq")
 
-[node name="Test" type="Node3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.31892, 0.0772637, 0.933156)
-
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 
 [node name="Button" type="Button" parent="CanvasLayer"]
@@ -23,5 +20,7 @@ transform = Transform3D(0.576015, -0.240126, 0.781374, -0.0202665, 0.951392, 0.3
 
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
 transform = Transform3D(0.739102, -0.514617, 0.434623, 0, 0.645231, 0.763987, -0.673593, -0.564665, 0.476892, -3.82307, 0.643085, 0)
+
+[node name="Test" type="Node3D" parent="."]
 
 [connection signal="pressed" from="CanvasLayer/Button" to="." method="_OnImportFileButtonPressed"]

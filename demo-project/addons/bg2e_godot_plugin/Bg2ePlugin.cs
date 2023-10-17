@@ -15,8 +15,16 @@ public partial class Bg2ePlugin : EditorPlugin
 		AddToolMenuItem("Import .bg2 Models", Callable.From(this.ImportBg2Model));
 
 		var script = GD.Load<Script>("res://addons/bg2e_godot_plugin/src/Bg2ToolsNode.cs");
-		var icon = GD.Load<Texture2D>("res://addons/bg2e_godot_plugin/icons/tools.png");
+		var icon = GD.Load<Texture2D>("res://addons/bg2e_godot_plugin/icons/wrench.png");
 		AddCustomType("Bg2ToolsNode", "Node3D", script, icon);
+
+		script = GD.Load<Script>("res://addons/bg2e_godot_plugin/src/Bg2Mesh.cs");
+		icon = GD.Load<Texture2D>("res://addons/bg2e_godot_plugin/icons/cube.png");
+		AddCustomType("Bg2Mesh", "Node3D", script, icon);
+
+		script = GD.Load<Script>("res://addons/bg2e_godot_plugin/src/Bg2PolyList.cs");
+		icon = GD.Load<Texture2D>("res://addons/bg2e_godot_plugin/icons/face.png");
+		AddCustomType("Bg2PolyList", "MeshInstance3D", script, icon);
 	}
 
 	public override void _ExitTree()

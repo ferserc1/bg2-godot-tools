@@ -72,11 +72,13 @@ public partial class Bg2ToolsNode : Node3D {
             var rootNode = _AddParentNode;
             if (scene != null && rootNode != null) {
                 var newNode = new Bg2Mesh();
+                rootNode.AddChild(newNode);
+                newNode.Owner = scene;
+                
                 newNode.LoadMeshFromFile(path);
                 newNode.Name = GetNodeNameFromPath(path);
                 rootNode.Position = new Vector3(0.0f, 0.0f, 0.0f);
-                rootNode.AddChild(newNode);
-                newNode.Owner = scene;
+                
             }
         }
     }
