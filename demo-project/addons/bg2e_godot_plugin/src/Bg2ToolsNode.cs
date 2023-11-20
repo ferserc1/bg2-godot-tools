@@ -1,3 +1,4 @@
+using System.ComponentModel;
 using bg2e;
 using Godot;
 
@@ -6,6 +7,7 @@ public partial class Bg2ToolsNode : Node3D {
 
     protected EditorPlugin _EditorPlugin = null;
     protected FileDialog ImportBg2FileDialog = null;
+    protected FileDialog ExportBg2FileDialog = null;
 
     protected EditorPlugin _GetEditorPlugin() {
         if (_EditorPlugin == null) {
@@ -40,6 +42,23 @@ public partial class Bg2ToolsNode : Node3D {
         }
         else {
             GD.PrintErr("Error: The current scene is not a Node3D scene.");
+        }
+    }
+
+    public void ExportBg2Model()
+    {
+        var exportNode = GetSelectedNode();
+        if (exportNode is Bg2Mesh) {
+            var mesh = exportNode as Bg2Mesh;
+            if (ExportBg2FileDialog == null) {
+                ExportBg2FileDialog = Dialogs.CreateSaveFileDialog(new string[]{"*.bg2","*.vwglb"});
+                this.AddChild(ExportBg2FileDialog);
+                ExportBg2FileDialog.FileSelected += _ExportFile;
+            }
+            ExportBg2FileDialog.Show();
+        }
+        else {
+            GD.PrintErr("Error: The selected node is not a Bg2Mesh");
         }
     }
 
@@ -80,6 +99,15 @@ public partial class Bg2ToolsNode : Node3D {
                 rootNode.Position = new Vector3(0.0f, 0.0f, 0.0f);
                 
             }
+        }
+    }
+
+    protected void _ExportFile(string path)
+    {
+        var exportNode = GetSelectedNode();
+        if (exportNode is Bg2Mesh) {
+            var mesh = exportNode as Bg2Mesh;
+            mesh.ExportMesh(path);
         }
     }
 }

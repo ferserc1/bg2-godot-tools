@@ -13,6 +13,7 @@ public partial class Bg2ePlugin : EditorPlugin
 	public override void _EnterTree()
 	{
 		AddToolMenuItem("Import .bg2 Models", Callable.From(this.ImportBg2Model));
+		AddToolMenuItem("Export .bg2 Model", Callable.From(this.ExportBg2Model));
 
 		var script = GD.Load<Script>("res://addons/bg2e_godot_plugin/src/Bg2ToolsNode.cs");
 		var icon = GD.Load<Texture2D>("res://addons/bg2e_godot_plugin/icons/wrench.png");
@@ -42,6 +43,16 @@ public partial class Bg2ePlugin : EditorPlugin
 			root.AddChild(Tools);
 		}
 		Tools.ImportBg2Model(Tools.GetSelectedNode(), GetTree().EditedSceneRoot);
+	}
+
+	public void ExportBg2Model()
+	{
+		if (Tools == null) {
+			var root = GetTree().Root;
+			Tools = new Bg2ToolsNode();
+			root.AddChild(Tools);
+		}
+		Tools.ExportBg2Model();
 	}
 	
 }

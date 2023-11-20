@@ -77,4 +77,29 @@ public partial class Bg2Mesh : Node3D
             polyList.Mesh = arrayMesh;
         }
     }
+
+    public void ExportMesh(String path) {
+        var children = GetChildren();
+        GD.Print("File selected: ", path);
+        foreach (var child in children) {
+            GD.Print("Children");
+            if (child is Bg2PolyList) {
+                var polyList = child as Bg2PolyList;
+                GD.Print("Exporting ", polyList.Name);
+                var meshTool = new MeshDataTool();
+                var mesh = new ArrayMesh();
+                mesh.AddSurfaceFromArrays(Mesh.PrimitiveType.Triangles, polyList.Mesh.SurfaceGetArrays(0));
+                meshTool.CreateFromSurface(mesh, 0);
+                
+                for (var i = 0; i < meshTool.GetVertexCount(); i++) {
+                    var vertex = meshTool.GetVertex(i);
+                    var normal = meshTool.GetVertexNormal(i);
+                    var texCoord0 = meshTool.GetVertexUV(i);
+                    var texCoord1 = meshTool.GetVertexUV2(i);
+                    GD.Print("Vertex ", i, ": ", vertex, ", Normal:", normal, ", UV0: ", texCoord0, ", UV1", texCoord1);
+                }
+
+            }
+        }
+    }
 }
